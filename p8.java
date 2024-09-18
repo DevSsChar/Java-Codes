@@ -1,22 +1,48 @@
-import java.util.Scanner;
-
-public class p8 {
-    public static Boolean palindrome(String s1,int s,int e)
+import java.util.*;
+class Node
+{
+    public
+    int data;
+    Node left;
+    Node right;
+    public Node(int data)
     {
-        if(s>=e)
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+public class p8 {
+    public static Node buildtree()
+    {
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Enter Data:");
+        int data=scan.nextInt();
+        if(data==-1)
         {
-            return true;
+            return null;
         }
-        if(s1.charAt(s)==s1.charAt(e))
+        Node root=new Node(data);
+        System.out.println("Enter data for left:");
+        root.left=buildtree();
+        System.out.println("Enter data for right:");
+        root.right=buildtree();
+        return root;
+    }
+    public static int countNodes(Node root)
+    {
+        if(root==null)
         {
-            return palindrome(s1, s+1, e-1);
+            return 0;
         }
-        return false;
+        int left=countNodes(root.left);
+        int right=countNodes(root.right);
+        int ans=left+right+1;
+        return ans;
     }
     public static void main(String[] args) {
-        Scanner scan=new Scanner(System.in);
-        String s=scan.nextLine();
-        System.out.println(palindrome(s,0,s.length()-1));
-        scan.close();
+        Node root=null;
+        root=buildtree();
+        System.out.println(countNodes(root));
     }
 }
